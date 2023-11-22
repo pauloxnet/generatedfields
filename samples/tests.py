@@ -1,6 +1,15 @@
 from django.test import TestCase
 
-from samples.models import Circle, Event, Item, Order, Rectangle, RightTriangle, Square
+from samples.models import (
+    Circle,
+    Event,
+    Item,
+    Order,
+    Package,
+    Rectangle,
+    RightTriangle,
+    Square,
+)
 
 
 class RectangleTestCase(TestCase):
@@ -75,3 +84,14 @@ class EventTestCase(TestCase):
     def test_str(self):
         self.assertEqual(str(self.startevent), "[∞] 2023-01-01…")
         self.assertEqual(str(self.endevent), "[7 days, 12:15:00] 2023-01-01…2023-01-09")
+
+
+class PackageTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.package = Package.objects.create(
+            slug="django", data={"info": {"version": "4.2.7"}}
+        )
+
+    def test_str(self):
+        self.assertEqual(str(self.package), "django 4.2.7")

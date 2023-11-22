@@ -121,3 +121,16 @@ class Event(models.Model):
 
     def __str__(self):
         return f"[{self.duration or '∞'}] {self.start_date}…{self.end_date or ''}"
+
+
+class Package(models.Model):
+    slug = models.SlugField()
+    data = models.JSONField()
+    version = models.GeneratedField(
+        expression=F("data__info__version"),
+        output_field=models.TextField(),
+        db_persist=True,
+    )
+
+    def __str__(self):
+        return f"{self.slug} {self.version}"
