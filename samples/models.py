@@ -7,6 +7,7 @@ from django.db.models.functions import (
     Radians,
     Round,
     Sin,
+    TruncDate,
 )
 
 
@@ -97,3 +98,26 @@ class Order(models.Model):
 
     def __str__(self):
         return f"[{self.status}] {self.payment or self.creation}"
+
+
+class Event(models.Model):
+    start = models.DateTimeField()
+    start_date = models.GeneratedField(
+        expression=TruncDate("start"),
+        output_field=models.DateField(),
+        db_persist=True,
+    )
+    end = models.DateTimeField(null=True)
+    end_date = models.GeneratedField(
+        expression=TruncDate("end"),
+        output_field=models.DateField(),
+        db_persist=True,
+    )
+    duration = models.GeneratedField(
+        expression=F("end") - F("start"),
+        output_field=models.DurationField(),
+        db_persist=True,
+    )
+
+    def __str__(self):
+        return f"[{self.duration or '∞'}] {self.start_date}…{self.end_date or ''}"

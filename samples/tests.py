@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from samples.models import Circle, Item, Order, Rectangle, RightTriangle, Square
+from samples.models import Circle, Event, Item, Order, Rectangle, RightTriangle, Square
 
 
 class RectangleTestCase(TestCase):
@@ -62,3 +62,16 @@ class OrderTestCase(TestCase):
     def test_str(self):
         self.assertEqual(str(self.createdorder), "[created] 2023-01-01 12:00Z")
         self.assertEqual(str(self.paidorder), "[paid] 2023-01-03 06:30Z")
+
+
+class EventTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.startevent = Event.objects.create(start="2023-1-1 12:00Z")
+        cls.endevent = Event.objects.create(
+            start="2023-1-1 11:45Z", end="2023-1-9 00:00Z"
+        )
+
+    def test_str(self):
+        self.assertEqual(str(self.startevent), "[∞] 2023-01-01…")
+        self.assertEqual(str(self.endevent), "[7 days, 12:15:00] 2023-01-01…2023-01-09")
