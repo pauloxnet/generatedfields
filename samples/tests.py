@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from samples.models import Circle, Rectangle, Square
+from samples.models import Circle, Rectangle, RightTriangle, Square
 
 
 class RectangleTestCase(TestCase):
@@ -28,3 +28,12 @@ class CircleTestCase(TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.circle), "3.1415²×π=31.0")
+
+
+class RightTriangleTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.righttriangle = RightTriangle.objects.create(hypotenuse=5, angle=45)
+
+    def test_str(self):
+        self.assertEqual(str(self.righttriangle), "5²×sin(45°)×cos(45°)÷2=6.25")
