@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Value
 from django.db.models.functions import (
     Cos,
     Pi,
@@ -65,3 +65,16 @@ class RightTriangle(models.Model):
 
     def __str__(self):
         return f"{self.hypotenuse}²×sin({self.angle}°)×cos({self.angle}°)÷2={self.area}"
+
+
+class Item(models.Model):
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    quantity = models.PositiveSmallIntegerField(db_default=Value(1))
+    total_price = models.GeneratedField(
+        expression=F("price") * F("quantity"),
+        output_field=models.DecimalField(max_digits=11, decimal_places=2),
+        db_persist=True,
+    )
+
+    def __str__(self):
+        return f"{self.price}×{self.quantity}={self.total_price}"
