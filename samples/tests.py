@@ -9,6 +9,7 @@ from samples.models import (
     Rectangle,
     RightTriangle,
     Square,
+    User,
 )
 
 
@@ -95,3 +96,12 @@ class PackageTestCase(TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.package), "django 4.2.7")
+
+
+class UserTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(first_name="Jane", last_name="Doe")
+
+    def test_str(self):
+        self.assertEqual(str(self.user), "Jane Doe")

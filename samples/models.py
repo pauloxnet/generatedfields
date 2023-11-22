@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Case, F, Value, When
 from django.db.models.functions import (
+    Concat,
     Cos,
     Pi,
     Power,
@@ -134,3 +135,16 @@ class Package(models.Model):
 
     def __str__(self):
         return f"{self.slug} {self.version}"
+
+
+class User(models.Model):
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    full_name = models.GeneratedField(
+        expression=Concat("first_name", Value(" "), "last_name"),
+        output_field=models.TextField(),
+        db_persist=True,
+    )
+
+    def __str__(self):
+        return self.full_name
