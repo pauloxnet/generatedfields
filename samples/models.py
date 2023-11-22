@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import F, Value
+from django.db.models import Case, F, Value, When
 from django.db.models.functions import (
     Cos,
     Pi,
@@ -78,3 +78,22 @@ class Item(models.Model):
 
     def __str__(self):
         return f"{self.price}×{self.quantity}={self.total_price}"
+
+
+class Order(models.Model):
+    creation = models.DateTimeField()
+    payment = models.DateTimeField(null=True)
+    status = models.GeneratedField(
+        expression=Case(
+            When(
+                payment__isnull=False,
+                then=Value("paid"),
+            ),
+            default=Value("created"),
+        ),
+        output_field=models.TextField(),
+        db_persist=True,
+    )
+
+    def __str__(self):
+        return f"[{self.status}] {self.payment or self.creation}"

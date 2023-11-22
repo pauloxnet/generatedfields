@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from samples.models import Circle, Item, Rectangle, RightTriangle, Square
+from samples.models import Circle, Item, Order, Rectangle, RightTriangle, Square
 
 
 class RectangleTestCase(TestCase):
@@ -48,3 +48,17 @@ class ItemTestCase(TestCase):
     def test_str(self):
         self.assertEqual(str(self.single_item), "9.99×1=9.99")
         self.assertEqual(str(self.multiple_item), "4.99×2=9.98")
+
+
+class OrderTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.createdorder = Order.objects.create(creation="2023-01-01 12:00Z")
+        cls.paidorder = Order.objects.create(
+            creation="2023-01-02 00:00Z",
+            payment="2023-01-03 06:30Z",
+        )
+
+    def test_str(self):
+        self.assertEqual(str(self.createdorder), "[created] 2023-01-01 12:00Z")
+        self.assertEqual(str(self.paidorder), "[paid] 2023-01-03 06:30Z")
