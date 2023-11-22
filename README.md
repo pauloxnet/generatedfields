@@ -25,9 +25,25 @@ Installing the latest version of Django (tested with Django 5.0b1):
 $ python3 -m pip install -r requirements.txt
 ```
 
+## 🐚 Shell
+
+Start the shell with the command:
+
+```console
+$ python3 -m manage shell
+```
+
+## 🔬 Tests
+
+Running the defined tests:
+
+```console
+$ python3 -m manage test
+```
+
 ## ⚖️ License
 
-**Django Generated Fields examples** is licensed under the [MIT License](https://github.com/pauloxnet/generatedfields/blob/main/LICENSE).
+The **Django Generated Fields examples** project is licensed under the [MIT License](https://github.com/pauloxnet/generatedfields/blob/main/LICENSE).
 
 ## 👥 Authors
 
