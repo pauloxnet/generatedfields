@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from samples.models import Rectangle
+from samples.models import Rectangle, Square
 
 
 class RectangleTestCase(TestCase):
@@ -10,3 +10,12 @@ class RectangleTestCase(TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.rectangle), "6×7=42.0")
+
+
+class SquareTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.square = Square.objects.create(side=3)
+
+    def test_str(self):
+        self.assertEqual(str(self.square), "3²=9.0")
